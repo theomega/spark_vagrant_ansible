@@ -1,0 +1,7 @@
+- name: Download Scala
+  get_url:
+    url="http://downloads.typesafe.com/scala/{{ scala_version }}/scala-{{ scala_version }}.deb"
+    dest="{{ scala_download_file }}"
+
+- name: Install Scala
+  apt: deb="{{ scala_download_file }}"

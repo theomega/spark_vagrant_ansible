@@ -1,0 +1,3 @@
+---
+- name: Materialize the spark upstart script
+  template: src=spark-master.conf dest=/etc/init/spark-master.conf backup=yes mode=0644

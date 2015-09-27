@@ -1,0 +1,52 @@
+---
+- name: Download Spark
+  get_url:
+    url="http://d3kbcqa49mib13.cloudfront.net/spark-{{ spark_version }}-bin-hadoop2.6.tgz"
+    dest="{{ spark_download_file }}"
+
+- name: Extracting spark
+  unarchive:
+    copy=no
+    src="{{ spark_download_file }}"
+    dest="/tmp"
+
+- name: Move spark to /opt
+  command: mv /tmp/{{ spark_archive_folder }} /opt/spark-{{ spark_version }}
+    creates=/opt/spark-{{ spark_version }} removes=/tmp/{{ spark_archive_folder }}
+
+- name: Correct owner of spark
+  file:
+    path=/opt/spark-{{ spark_version }}
+    owner=root
+    group=root
+    recurse=true
+
+- name: Add symlink
+  file:
+    src=/opt/spark-{{ spark_version }}
+    dest=/opt/spark
+    owner=root
+    group=root
+    state=link
+
+- name: Add Spark Group
+  group: name=spark state=present
+
+- name: Add Spark User
+  user: name=spark group=spark
+
+- name: Add Spark Log Folder
+  file:
+    path=/var/log/spark
+    state=directory
+    mode=0755
+    owner=spark
+    group=spark
+
+- name: Add Spark Work Folder
+  file:
+    path=/var/lib/spark
+    state=directory
+    mode=0755
+    owner=spark
+    group=spark

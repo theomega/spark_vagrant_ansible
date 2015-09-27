@@ -1,0 +1,9 @@
+---
+- name: Make Download Folder
+  file: path={{ ansible_env.HOME }}/Downloads state=directory mode=0700
+
+- name: Disable chef
+  service: name=chef-client enabled=yes state=stopped
+
+- name: Disable puppet
+  service: name=puppet enabled=yes state=stopped

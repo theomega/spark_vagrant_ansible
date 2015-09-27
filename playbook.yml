@@ -1,0 +1,25 @@
+---
+- hosts: spark-master
+  roles:
+    - spark-master
+    - spark-slave
+  tasks:
+   - hostname: name={{ inventory_hostname }}
+
+   - name: Start spark-master
+     service: name=spark-master state=started
+
+   - name: Start spark-slave
+     service: name=spark-slave state=started
+
+
+- hosts: spark-slave
+  roles:
+   - spark-slave
+  tasks:
+   - hostname: name={{ inventory_hostname }}
+
+   - name: Start spark-slave
+     service: name=spark-slave state=started
+
+   - debug: var=hostvars[inventory_hostname]
