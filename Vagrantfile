@@ -63,20 +63,16 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "spark-master" do |master|
     master.vm.box = "ubuntu/trusty64"
-    master.vm.network "forwarded_port", guest: 8080, host: 8080
-    master.vm.network "forwarded_port", guest: 8081, host: 8081
     config.vm.network "private_network", ip: "192.168.33.10"
   end
 
   config.vm.define "spark-slave1" do |slave1|
     slave1.vm.box = "ubuntu/trusty64"
-    slave1.vm.network "forwarded_port", guest: 8081, host: 8082
     config.vm.network "private_network", ip: "192.168.33.11"
   end
 
   config.vm.define "spark-slave2" do |slave2|
     slave2.vm.box = "ubuntu/trusty64"
-    slave2.vm.network "forwarded_port", guest: 8081, host: 8083
     config.vm.network "private_network", ip: "192.168.33.12"
   end
 end
