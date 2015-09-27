@@ -42,14 +42,6 @@ Vagrant.configure(2) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
-     # Display the VirtualBox GUI when booting the machine
-     # vb.gui = true
-
-     # Customize the amount of memory on the VM:
-     vb.memory = "1280"
-  end
-
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "playbook.yml"
     ansible.sudo = true
@@ -64,15 +56,24 @@ Vagrant.configure(2) do |config|
   config.vm.define "spark-master" do |master|
     master.vm.box = "ubuntu/trusty64"
     config.vm.network "private_network", ip: "192.168.33.10"
+    config.vm.provider "virtualbox" do |vb|
+       vb.memory = "1780"
+    end
   end
 
   config.vm.define "spark-slave1" do |slave1|
     slave1.vm.box = "ubuntu/trusty64"
     config.vm.network "private_network", ip: "192.168.33.11"
-  end
+    config.vm.provider "virtualbox" do |vb|
+       vb.memory = "1280"
+    end
+   end
 
   config.vm.define "spark-slave2" do |slave2|
     slave2.vm.box = "ubuntu/trusty64"
     config.vm.network "private_network", ip: "192.168.33.12"
-  end
+    config.vm.provider "virtualbox" do |vb|
+       vb.memory = "1280"
+    end
+   end
 end
